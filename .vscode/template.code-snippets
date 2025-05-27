@@ -1,0 +1,59 @@
+{
+	// Place your SOC_CP workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"cp template": {
+		"prefix": "cpp",
+		"body": [
+			"#include <bits/stdc++.h>",
+			"using namespace std;",
+			"",
+			"#define fastio ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
+			"#define f(i, l, n) for(decltype(n) i = l; (l < n) ? i < n : i > n; (l < n) ? i++ : i--)",
+			"#define ll long long",
+			"#define pb push_back",
+			"#define endl '\\n'",
+			"#define all(x) (x).begin(), (x).end()",
+			"#define rall(x) (x).rbegin(), (x).rend()",
+			"#define vec_cin(v,n) f(i,0,n) cin >> v[i];",
+			"#define vec_cout(v,n) f(i,0,n) cout << v[i] << \" \"; cout<<endl;",
+			"#define dbg(x) cerr << #x << \" = \" << x << \", \";",
+			"",
+			"using vi = vector<ll>;",
+			"using vvi = vector<vi>;",
+			"using pi = pair<ll,ll>;",
+			"using vpi = vector<pi>;",
+			"using usi = unordered_set<ll>;",
+			"using si = set<ll>;",
+			"using msi = multiset<ll>;",
+			"using mi = map<ll,ll>;",
+			"using umi = unordered_map<ll,ll>;",
+			"",
+			"void solve() {",
+			"    $0",
+			"}",
+			"",
+			"int main() {",
+			"    fastio",
+			"    ll t = 1;",
+			"    // cin >> t;",
+			"    while(t--) solve();",
+			"    return 0;",
+			"}"
+		],
+		"description": "Minimal competitive programming template"
+	}
+}
