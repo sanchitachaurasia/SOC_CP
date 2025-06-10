@@ -1,4 +1,4 @@
-# Contribution Guidelines
+push # Contribution Guidelines
 
 This guide walks you through how to contribute your weekly competitive programming solutions to this repository using a fork-based workflow.
 
