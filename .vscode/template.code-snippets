@@ -22,14 +22,14 @@
 			"using namespace std;",
 			"",
 			"#define fastio ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
-			"#define f(i, l, n) for(decltype(n) i = l; (l < n) ? i < n : i > n; (l < n) ? i++ : i--)",
 			"#define ll long long",
 			"#define pb push_back",
-			"#define endl '\\n'",
+			"#define nl '\\n'",
 			"#define all(x) (x).begin(), (x).end()",
 			"#define rall(x) (x).rbegin(), (x).rend()",
-			"#define vec_cin(v,n) f(i,0,n) cin >> v[i];",
-			"#define vec_cout(v,n) f(i,0,n) cout << v[i] << \" \"; cout<<endl;",
+			"#define ff(i, l, n) for(decltype(n) i = l; (l < n) ? i < n : i > n; (l < n) ? i++ : i--)",
+			"#define vin(v,n) f(i,0,n) cin >> v[i];",
+			"#define vout(v,n) f(i,0,n) cout << v[i] << \" \"; cout<<nl;",
 			"#define dbg(x) cerr << #x << \" = \" << x << \", \";",
 			"",
 			"using vi = vector<ll>;",
@@ -55,5 +55,13 @@
 			"}"
 		],
 		"description": "Minimal competitive programming template"
+	},
+	"for loop": {
+		"prefix": "ffor",
+		"body": [
+			"for(${1:ll} ${2:i} = ${3:0}; ${4:i<n}; ${5:i++}) {",
+			"    $0",
+			"}"
+		]
 	}
 }
