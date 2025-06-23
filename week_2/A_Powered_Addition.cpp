@@ -29,53 +29,42 @@ using umi = unordered_map<ll,ll>;
 #define ss second
 
 void solve() {
-	ll n, x; cin >> n >> x;
+	ll n; cin >> n;
+	vi a(n);
 
-	// construction idea:
-	// for n > 2, ie, there are ones and not in the first position,
-	// we can always partition the powers of two, ie, subsets of the 1 positions
-	// if x > 1s, just add zeros and +1 even number of times
+	vin(a, n);
+
+	// greedy idea:
+	// track the array max upto index i
+	// for all indices i, count the difference as a[i]-curr_max
+	// this is the value we need to compensate for
+	// since we can choose indices freely, all we need is posn of last set bit in max difference
+
+	ll curr_max = a[0];
+	ll max_diff = 0;
+
+	for (ll i = 1; i < n; i++)
+	{
+		if (a[i] >= curr_max) {
+			curr_max = a[i];
+		}
+		else {
+			max_diff = max(max_diff, curr_max - a[i]);
+		}
+	}
+
+	ll pow2 = 1;
+
+	if (max_diff == 0) {cout << "0\n"; return; }
+
+	assert(max_diff > 0);
+
+	while(max_diff >>= 1) {
+		pow2++;
+	}
 	
-	// for n = 1, the same holds except for an odd x we'll need to use
-	// 2nd LSB so effective +3
-
-	// for n = 0, the +3 is for even x
-
-	ll ones = __builtin_popcount(x);
-
-	if (x == 1) {
-		if (n%2) {
-			cout << n << nl; return;
-		}
-		else {
-			cout << n+3 << nl; return;
-		}
-	}
-
-	if (x == 0) {
-		if (n == 1) {
-			cout << "-1\n"; return;
-		}
-		if (n%2) {
-			cout << n+3 << nl; return;
-		}
-		else {
-			cout << n << nl; return;
-		}
-	}
-
-	if (n >= ones && x >= 2) {
-		ll extra = (n - ones);
-
-		if (extra % 2) extra++;
-
-		ll ans = x + extra;
-
-		cout << ans << nl;
-		return;
-	}
-
-	cout << x << nl; return;
+	cout << pow2 << nl;
+	
 }
 
 int main() {

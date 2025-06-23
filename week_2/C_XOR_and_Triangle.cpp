@@ -29,53 +29,27 @@ using umi = unordered_map<ll,ll>;
 #define ss second
 
 void solve() {
-	ll n, x; cin >> n >> x;
+	ll x; cin >> x;
 
-	// construction idea:
-	// for n > 2, ie, there are ones and not in the first position,
-	// we can always partition the powers of two, ie, subsets of the 1 positions
-	// if x > 1s, just add zeros and +1 even number of times
-	
-	// for n = 1, the same holds except for an odd x we'll need to use
-	// 2nd LSB so effective +3
+	// idea:
+	// treat each number as a set containing some subset of {1, 2, 4 ..}
+	// x XOR y = A symdiff B
+	// so we need A symdiff B strict subset of A U B
+	// and A + A symdiff B, B + A symdiff B > A U B 
 
-	// for n = 0, the +3 is for even x
+	// essentially, we need a y that is same in atleast one position and differs in atleast one
+	// this is not psosible is x is 2^k or 2^k-1
+	// otherwise we pick last set bit (leave it as is), set the last unset bit
+	// and there is a desired y
 
-	ll ones = __builtin_popcount(x);
-
-	if (x == 1) {
-		if (n%2) {
-			cout << n << nl; return;
-		}
-		else {
-			cout << n+3 << nl; return;
-		}
+	if (__builtin_popcount(x) == 1 || __builtin_popcount(x+1) == 1) {
+		cout << "-1\n"; return;
 	}
-
-	if (x == 0) {
-		if (n == 1) {
-			cout << "-1\n"; return;
-		}
-		if (n%2) {
-			cout << n+3 << nl; return;
-		}
-		else {
-			cout << n << nl; return;
-		}
+	else {
+		// (x & -x) unsets all but last set bit
+		// ((~x) & -(~x)) sets only last unset bit
+		cout << (x & -x) + ((~x) & -(~x)) << nl; return;
 	}
-
-	if (n >= ones && x >= 2) {
-		ll extra = (n - ones);
-
-		if (extra % 2) extra++;
-
-		ll ans = x + extra;
-
-		cout << ans << nl;
-		return;
-	}
-
-	cout << x << nl; return;
 }
 
 int main() {

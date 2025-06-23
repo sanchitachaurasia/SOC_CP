@@ -28,54 +28,38 @@ using umi = unordered_map<ll,ll>;
 #define ff first
 #define ss second
 
+#define ull unsigned ll
+
 void solve() {
-	ll n, x; cin >> n >> x;
+	ull x, y; cin >> x >> y;
+	if (x < y) swap(x, y);
 
-	// construction idea:
-	// for n > 2, ie, there are ones and not in the first position,
-	// we can always partition the powers of two, ie, subsets of the 1 positions
-	// if x > 1s, just add zeros and +1 even number of times
-	
-	// for n = 1, the same holds except for an odd x we'll need to use
-	// 2nd LSB so effective +3
+	// idea:
+	// we need k such that x+k and y+k have set bits at exclusive positions
+	// one trick is to think in terms of subtractions:
+	// x > y, then we can subtract y both sides and k = -y works!
+	// another nice way to apply this is:
+	//     k = x % (highest power of 2 in x say n)
+	//     so k+x = 2^(n+1)
+	//     y < x implies, k+y < 2^(n+1) hence set bits must be different
+	//     so use ~x+1 to get negation and apply a mask
+	// only other case is x = y which is IMPOSSIBLE
 
-	// for n = 0, the +3 is for even x
-
-	ll ones = __builtin_popcount(x);
-
-	if (x == 1) {
-		if (n%2) {
-			cout << n << nl; return;
-		}
-		else {
-			cout << n+3 << nl; return;
-		}
+	if (x == y)  {
+		cout << "-1\n"; return;
 	}
 
-	if (x == 0) {
-		if (n == 1) {
-			cout << "-1\n"; return;
-		}
-		if (n%2) {
-			cout << n+3 << nl; return;
-		}
-		else {
-			cout << n << nl; return;
-		}
-	}
+	ull mask = 2;
+	ull t = x;
+	while(t >>= 1) mask <<= 1;
 
-	if (n >= ones && x >= 2) {
-		ll extra = (n - ones);
+	mask -= 1;
 
-		if (extra % 2) extra++;
+	ull k = (~x + 1) & mask;
 
-		ll ans = x + extra;
+	assert((x+k) + (y+k) == (x+k) ^ (y+k));
 
-		cout << ans << nl;
-		return;
-	}
-
-	cout << x << nl; return;
+	cout << k << "\n";
 }
 
 int main() {
