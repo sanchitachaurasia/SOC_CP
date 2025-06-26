@@ -7,9 +7,9 @@ using namespace std;
 #define nl '\n'
 #define all(x) (x).begin(), (x).end()
 #define rall(x) (x).rbegin(), (x).rend()
-#define f(i, l, n) for(decltype(n) i = l; (l < n) ? i < n : i > n; (l < n) ? i++ : i--)
-#define vin(v,n) f(i,0,n) cin >> v[i];
-#define vout(v,n) f(i,0,n) cout << v[i] << " "; cout<<nl;
+#define forr(i, l, n) for(decltype(n) i = l; (l < n) ? i < n : i > n; (l < n) ? i++ : i--)
+#define vin(v,n) forr(i,0,n) cin >> v[i];
+#define vout(v,n) forr(i,0,n) cout << v[i] << " "; cout<<nl;
 #define dbg(x) cerr << #x << " = " << x << ", ";
 
 using vi = vector<ll>;
@@ -22,28 +22,33 @@ using msi = multiset<ll>;
 using mi = map<ll,ll>;
 using umi = unordered_map<ll,ll>;
 
-const ll M = 1e9 + 7;
+#define yes cout << "YES\n"; return
+#define no cout << "NO\n"; return
 
-ll modpow(ll x, ll n, ll m) {
-	if (n==0) return 1 % m;
-	ll res = modpow(x, n/2, m);
-	res = (res*res) % m;
-	if (n%2) res = (res*x) % m;
-	return res;
-}
+#define ff first
+#define ss second
+
+const ll M = 1e9+7;
 
 void solve() {
-	ll a, b, c;
-	cin >> a >> b >> c;
-	ll d = modpow(b, c, M-1);
-	ll e = modpow(a, d, M);
-	cout << e << '\n';
+	// answer is derangements with n elements
+	// use recursion D(n) = n*D(n-1) + (-1)^n, D(1) = 0
+	// OR closed form is harder
+	ll n; cin >> n;
+	vi D(n+1);
+	D[1] = 0;
+
+	for(ll i = 2; i<=n; i++) {
+		D[i] = (i * D[i-1] + (i%2 ? -1 : 1)) % M;
+	}
+
+	cout << D[n];
 }
 
 int main() {
 	fastio
 	ll t = 1;
-	cin >> t;
+	// cin >> t;
 	while(t--) solve();
 	return 0;
 }

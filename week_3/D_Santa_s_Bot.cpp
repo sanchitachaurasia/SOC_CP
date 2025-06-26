@@ -22,7 +22,7 @@ using msi = multiset<ll>;
 using mi = map<ll,ll>;
 using umi = unordered_map<ll,ll>;
 
-const ll MOD = 998244353;
+const ll M = 998244353;
 
 ll modpow(ll x, ll n, ll m) {
 	if (n==0) return 1 % m;
@@ -53,18 +53,18 @@ void solve() {
 
 	ll num = 0, den = 0;
 	for(ll i = 0; i<n; i++) {
-		ll inv_k = modpow(k[i], MOD-2, MOD);
+		ll inv_k = modpow(k[i], M-2, M);
 		ll t = 0;
 		for(auto g : gifts[i]) {
 			t += counts[g];	
 		}
-		t = ((t % MOD) * inv_k) % MOD;
-		num = (num + t) % MOD;
+		t = ((t % M) * inv_k) % M;
+		num = (num + t) % M;
 	}
-	den = (n * n) % MOD;
-	den = modpow(den, MOD-2, MOD);
+	den = (n * n) % M;
+	den = modpow(den, M-2, M);
 
-	cout << (num * den) % MOD;
+	cout << (num * den) % M;
 }
 
 int main() {
