@@ -109,3 +109,6 @@ git push origin your-name
 * Organize your code by week and problem.
 
 ---
+git add .
+git commit -m "Add Week 3 solutions"
+git push origin himanshu-thalor
