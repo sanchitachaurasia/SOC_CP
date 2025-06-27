@@ -1,54 +1,35 @@
+// Binomial Coefficient using DP+  memoization
+
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MOD = 1e9 + 7;
-const int MAX = 1e6 + 5;
-
-vector<long long> fact(MAX), inv_fact(MAX);
-
-// Binary exponentiation
-long long power(long long x, long long y) {
-    long long res = 1;
-    x = x % MOD;
-    while (y > 0) {
-        if (y & 1) res = res * x % MOD;
-        x = x * x % MOD;
-        y >>= 1;
-    }
-    return res;
+// Returns value of Binomial Coefficient C(n, k)
+int getnCk(int n, int k, vector<vector<int>> &memo) {
+  
+    // k can not be grater then k so we
+  	// return 0 here
+    if (k > n)
+        return 0;
+  
+  	// base condition when k and n are 
+  	// equal or k = 0
+    if (k == 0 || k == n)
+        return 1;
+  	if(memo[n][k] != -1) return memo[n][k];
+  
+    // Recurvie add the value and store to memorize table
+    return memo[n][k] = getnCk(n - 1, k - 1, memo) 
+      					+ getnCk(n - 1, k, memo);
 }
-
-// Precompute factorials and inverse factorials
-void precompute() {
-    fact[0] = 1;
-    for (int i = 1; i < MAX; i++) {
-        fact[i] = fact[i - 1] * i % MOD;
-    }
-
-    inv_fact[MAX - 1] = power(fact[MAX - 1], MOD - 2);
-    for (int i = MAX - 2; i >= 0; i--) {
-        inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD;
-    }
+int binomialCoeff(int n, int k) {
+  	
+  	// Create table for memorization
+	vector<vector<int>> memo(n + 1, vector<int> (k + 1, -1));
+  
+  	return getnCk(n, k, memo);
 }
-
-long long binomial(int a, int b) {
-    if (b < 0 || b > a) return 0;
-    return fact[a] * inv_fact[b] % MOD * inv_fact[a - b] % MOD;
-}
-
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-
-    precompute();
-
-    int n;
-    cin >> n;
-    while (n--) {
-        int a, b;
-        cin >> a >> b;
-        cout << binomial(a, b) << "\n";
-    }
-
+    int n = 5, k = 2;
+    cout << binomialCoeff(n, k);
     return 0;
 }
