@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<vector<pair<int,ll>>> graph(n+1);
+
+    for (int i = 0; i < m; i++) {
+        int a, b; ll c;
+        cin >> a >> b >> c;
+        graph[a].emplace_back(b, c);
+    }
+
+    // Use multiset to keep costs sorted for each node
+    vector<multiset<ll>> bestCosts(n+1);
+
+    priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<>> pq;
+    pq.emplace(0, 1);
+    bestCosts[1].insert(0);
+
+    vector<ll> answers;
+
+    while (!pq.empty()) {
+        auto [cost, u] = pq.top();
+        pq.pop();
+
+        if (u == n) {
+            answers.push_back(cost);
+            if ((int)answers.size() == k) break;
+        }
+
+        for (auto &[v, w] : graph[u]) {
+            ll new_cost = cost + w;
+
+            // If we have less than k costs stored or new_cost is better than the worst cost
+            if ((int)bestCosts[v].size() < k) {
+                bestCosts[v].insert(new_cost);
+                pq.emplace(new_cost, v);
+            } else {
+                auto worst_it = prev(bestCosts[v].end()); // largest cost
+                if (new_cost < *worst_it) {
+                    bestCosts[v].erase(worst_it);
+                    bestCosts[v].insert(new_cost);
+                    pq.emplace(new_cost, v);
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < k; i++) {
+        cout << answers[i] << " ";
+    }
+    cout << "\n";
+
+    return 0;
+}
